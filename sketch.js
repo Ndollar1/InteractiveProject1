@@ -20,7 +20,7 @@ var restartTimer;
 
 
 function setup() {
-  restartTimer = 5;
+ restartTimer = 5;
   missedshots = 0;
   page = 1;
   timeLimit = 40;
@@ -284,7 +284,7 @@ if(page ==2){
     rect(resX,resY,resW,resH);
     text("Restart",resX+(resW/2)-35,resY+(resH/2));
   restartTimer--;
-  if(restartTimer<=0;mouseIsPressed&&(mouseX>resX)&&(mouseX <resX+resW)&&(mouseY>resY)&&(mouseY<resY+resH)){
+  if(restartTimer<=0&&mouseIsPressed&&(mouseX>resX)&&(mouseX <resX+resW)&&(mouseY>resY)&&(mouseY<resY+resH)){
     score = 0;
     restartTimer = 5;
     missedshots = 0;
