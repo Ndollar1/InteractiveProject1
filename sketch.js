@@ -1,6 +1,8 @@
 //create variables for the bullets, player,colors, positions, score, timelimit, missed shots and page number
 var balls;
+var green,red,blue,yellow;
 var checkR,checkG,checkB,checkY;
+var hit, left,right,dash, aim;
 var arrow;
 var shoot, ballImg;
 var MARGIN = 40;
@@ -17,10 +19,12 @@ var timeLimit;
 var page;
 var missedshots;
 var restartTimer;
+var stars;
 
 
 function setup() {
- restartTimer = 5;
+  //textFont('Helvetica.ttc');
+ restartTimer = 300;
   missedshots = 0;
   page = 1;
   timeLimit = 40;
@@ -32,13 +36,13 @@ function setup() {
     checkR = 0;
     checkB = 0;
     checkY = 0;
-  xpos = 100;
-  ypos = 300;
-  radius = 20;
+  xpos = 230;
+  ypos = 630;
+  radius = 30;
   score = 0;
   shot = false;
   fireX = 250;
-  fireY = 600;
+  fireY = 710;
   fireW = 100;
   fireH = 100;
     resX = 200;
@@ -46,9 +50,20 @@ function setup() {
     resW = 200;
     resH = 100;
   generateColor();
-  //shoot = loadImage('assets/shooter.png');
+  stars = loadImage('Stars.png');
+  green = loadImage('green.png');
+  blue = loadImage('Blue.png');
+  red = loadImage('red.png');
+  yellow = loadImage('Yellow.png');
+  shoot = loadImage('Rocket.png');
+  hit = loadImage('Hit.png');
+  left = loadImage('left.png');
+  right = loadImage('Right.png');
+  dash = loadImage('Dashboard.png');
+  aim = loadImage('Preview Target Cover.png');
   arrow = createSprite(width/2, 300);
-  //arrow.addImage('normal', shoot);
+  arrow.addImage('normal', shoot);
+  arrow.rotation = -90;
 
   balls = new Group();
 
@@ -86,35 +101,48 @@ function generateColor(){
 
 function draw() {
 
-  background(200);
   if(page == 1){
+    background(0,0,50);
+    image(stars,0,0);
       textSize(20);
-      text("Time:",250,50);
-      text("Color",xpos-25,ypos-30);
-    text(timeLimit,300,50);
+      //text("Time:",250,50);
+      //text("Color",xpos-25,ypos-30);
   if(frameCount%60==0){
     timeLimit--;
   }
   //image(portImage, 600, 400);
-  fill(220,40,40);
-  rect(50,50,100,100);
-  fill(40,220,40);
-  rect(450,50,100,100);
-  fill(40,40,220);
-  rect(50,450,100,100);
-  fill(220,220,40);
-  rect(450,450,100,100);
-  rect(fireX,fireY,fireW,fireH);
-      rect(fireX+200,fireY,fireW,fireH);
-      rect(fireX-200,fireY,fireW,fireH);
+  image(green,450,50,100,100);
+  image(red,50,50,100,100);
+  image(blue,25,450,150,100);
+  image(yellow,450,450,100,100);
+  //fill(220,40,40);
+  //rect(50,50,100,100);
+  //fill(40,220,40);
+  //rect(450,50,100,100);
+//  fill(40,40,220);
+//  rect(50,450,100,100);
+//  fill(220,220,40);
+//  rect(450,450,100,100);
+image(dash,0,560);
+fill(255);
+textSize(30);
+text(timeLimit,fireX+200,fireY+50);
+image(hit,fireX,fireY);
+image(left,fireX-220,fireY);
+image(right,fireX-110,fireY);
+text(score, 320,650);
+  //rect(fireX,fireY,fireW,fireH);
+  //rect(fireX+200,fireY,fireW,fireH);
+  //rect(fireX-200,fireY,fireW,fireH);
   fill(r,g,b);
   ellipse(xpos,ypos,radius,radius);
+  image(aim,xpos-40,ypos-40);
     //var d = dist(mouseX,mouseY,xpos,ypos);
 
-  if(keyDown(LEFT_ARROW)||(mouseIsPressed&&(mouseX>fireX-200)&&(mouseX <fireX+fireW-200)&&(mouseY>fireY)&&(mouseY<fireY+fireH)))
+  if(keyDown(LEFT_ARROW)||(mouseIsPressed&&(mouseX>fireX-220)&&(mouseX <fireX+fireW-220)&&(mouseY>fireY)&&(mouseY<fireY+fireH)))
     arrow.rotation -= 4;
 
-  if(keyDown(RIGHT_ARROW)||(mouseIsPressed&&(mouseX>fireX+200)&&(mouseX <fireX+fireW+200)&&(mouseY>fireY)&&(mouseY<fireY+fireH)))
+  if(keyDown(RIGHT_ARROW)||(mouseIsPressed&&(mouseX>fireX-110)&&(mouseX <fireX+fireW-110)&&(mouseY>fireY)&&(mouseY<fireY+fireH)))
     arrow.rotation += 4;
 /*
   if(keyDown(UP_ARROW)){
@@ -224,10 +252,7 @@ function draw() {
         }
 
       }
-  textSize(30);
-  fill(0,0,0);
-      text("Score:",200,550);
-  text(score, 320,550);
+
   if(timeLimit<=0){
     page=2;
   }
@@ -251,6 +276,7 @@ function draw() {
    */
 }
 if(page ==2){
+  background(200);
     textSize(30);
     text("Score:",55,75);
   text(score,175,75);
@@ -286,7 +312,7 @@ if(page ==2){
   restartTimer--;
   if(restartTimer<=0&&mouseIsPressed&&(mouseX>resX)&&(mouseX <resX+resW)&&(mouseY>resY)&&(mouseY<resY+resH)){
     score = 0;
-    restartTimer = 5;
+    restartTimer = 300;
     missedshots = 0;
       checkR = 0;
       checkB = 0;
